@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Usuário</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        body {
+            background-image: url("transferir.jpg");
+            height: 97vh;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .navbar .btn {
+            margin-right: -10px;
+            background: transparent;
+            color: white;
+            border: none;
+        }
+        .navbar {
+            background-color: #343a40;
+            color: white;
+        }
+        .card {
+            background: #1A1A1AF7;
+            margin-top: 5em;
+            color: white;
+        }
+        .post {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: transparent;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .post .header {
+            font-weight: bold;
+        }
+        .post img {
+            width: 90%;
+            height: 300px;
+        }
+        .post video {
+          width: 80%;
+          height: 250px;
+        }
+        .post .timestamp {
+            font-size: 0.85em;
+            color: #777;
+        }
+        .post .body {
+            margin-top: 5px;
+        }
+        .like-button {
+            cursor: pointer;
+            margin-top: 10%;
+            color: #dc3545;
+            font-size: 1.9em;
+        }
+        #homeContent {
+          margin-top: 8em;
+        }
+    </style>
+</head>
+<body class="text-light bg-dark">
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <button class="btn btn-primary" onclick="showHome()"><i class="fas fa-home"></i> <br>Home</button>
+        <button class="btn btn-primary" onclick="showBookingForm()"><i class="fas fa-calendar-plus"></i><br>Agendar</button>
+        <button class="btn btn-primary" onclick="showUserTrips()"><i class="fas fa-suitcase"></i><br>Viagens</button>
+        <button class="btn btn-primary" onclick="showAbout()"><i class="fas fa-info-circle"></i><br>Sobre</button>
+        <button class="btn btn-primary" onclick="showUser()"><i class="fas fa-user"></i><br>Dados</button>
+    </nav>
+
+    <div class="container mt-5">
+        <div id="homeContent" class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="post-list">
+                            <!-- Publicações aparecerão aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <div id="bookingForm" style="display: none;">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Agendar Viagem</h3>
+                            <form id="booking-form">
+                                <div class="form-group">
+                                    <label for="destination">Destino:</label>
+                                    <select class="form-control" id="destination" required onchange="updatePrice()">
+                                        <option value="" disabled selected>Selecione uma província</option>
+                                        <option value="Bengo">Bengo</option>
+                                        <option value="Benguela">Benguela</option>
+                                        <option value="Bié">Bié</option>
+                                        <option value="Cabinda">Cabinda</option>
+                                        <option value="Cuando Cubango">Cuando Cubango</option>
+                                        <option value="Cuanza Norte">Cuanza Norte</option>
+                                        <option value="Cuanza Sul">Cuanza Sul</option>
+                                        <option value="Cunene">Cunene</option>
+                                        <option value="Huambo">Huambo</option>
+                                        <option value="Huíla">Huíla</option>
+                                        <option value="Luanda">Luanda</option>
+                                        <option value="Lunda Norte">Lunda Norte</option>
+                                        <option value="Lunda Sul">Lunda Sul</option>
+                                        <option value="Malanje">Malanje</option>
+                                        <option value="Moxico">Moxico</option>
+                                        <option value="Namibe">Namibe</option>
+                                        <option value="Uíge">Uíge</option>
+                                        <option value="Zaire">Zaire</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="origin">Origem:</label>
+                                    <select class="form-control" id="origin" required>
+                                        <option value="" disabled selected>Selecione uma província</option>
+                                        <option value="Bengo">Bengo</option>
+                                        <option value="Benguela">Benguela</option>
+                                        <option value="Bié">Bié</option>
+                                        <option value="Cabinda">Cabinda</option>
+                                        <option value="Cuando Cubango">Cuando Cubango</option>
+                                        <option value="Cuanza Norte">Cuanza Norte</option>
+                                        <option value="Cuanza Sul">Cuanza Sul</option>
+                                        <option value="Cunene">Cunene</option>
+                                        <option value="Huambo">Huambo</option>
+                                        <option value="Huíla">Huíla</option>
+                                        <option value="Luanda">Luanda</option>
+                                        <option value="Lunda Norte">Lunda Norte</option>
+                                        <option value="Lunda Sul">Lunda Sul</option>
+                                        <option value="Malanje">Malanje</option>
+                                        <option value="Moxico">Moxico</option>
+                                        <option value="Namibe">Namibe</option>
+                                        <option value="Uíge">Uíge</option>
+                                        <option value="Zaire">Zaire</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numPeople">Número de Pessoas:</label>
+                                    <input type="number" class="form-control" id="numPeople" required onchange="updatePrice()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tripDate">Data da Viagem:</label>
+                                    <input type="date" class="form-control" id="tripDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">Número de Telefone:</label>
+                                    <input type="tel" class="form-control" id="phoneNumber" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Preço Total (Kz):</label>
+                                    <input type="text" class="form-control" id="price" readonly>
+                                </div>
+                                <button type="submit" class="btn btn-success">Agendar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="userTrips" style="display: none;">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Minhas Viagens</h3>
+                            <div id="user-trips-list" class="list-group"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aboutModalLabel">Sobre o Projeto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Este projeto foi desenvolvido para facilitar o agendamento de viagens. Utilizamos tecnologias modernas para criar uma experiência de usuário intuitiva e eficiente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Seus Dados</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><span class="navbar-brand"><i class="fas fa-user"></i> <span id="user-name"></span></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js" type="module"></script>
+    <script src="main.js" type="module"></script>
+    <script>
+        // Funções de navegação entre os diferentes conteúdos
+        function showHome() {
+            document.getElementById('homeContent').style.display = 'block';
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('userTrips').style.display = 'none';
+        }
+
+        function showBookingForm() {
+            document.getElementById('homeContent').style.display = 'none';
+            document.getElementById('bookingForm').style.display = 'block';
+            document.getElementById('userTrips').style.display = 'none';
+        }
+
+        function showUserTrips() {
+            document.getElementById('homeContent').style.display = 'none';
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('userTrips').style.display = 'block';
+        }
+
+        function showAbout() {
+            $('#aboutModal').modal('show');
+        }
+
+        function showUser() {
+            $('#userModal').modal('show');
+        }
+    </script>
+</body>
+</html>

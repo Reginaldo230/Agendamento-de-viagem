@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Administrador</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("transferir.jpg");
+            height: 97vh;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .navbar {
+            background-color: #343a40;
+            color: white;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .nav-link {
+            color: white;
+        }
+        .card {
+            background-color: #1A1A1AF7;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            color: #343a40;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid #dee2e6;
+        }
+        #home-content {
+          margin-top: 15%;
+        }
+        .card {
+          margin-top: 15%;
+        }
+        .form-control,
+        #btn-upload,
+        #btn-post {
+          margin-top: 5%;
+        }
+        #input-container, #post-input-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      width: 100%;
+      background-color: transparent;
+    }
+     #btn-post {
+      margin-left: 2%;
+    }
+    #input-container input[type="text"], #post-input-container input[type="text"] {
+      flex: 1;
+      width: 90%;
+      margin-right: 10px;
+    }
+    #btn-upload, #btn-upload-post {
+      margin-left: 2%;
+    }
+    .btn-home,
+    .btn-pub  {
+      margin-left: -10%;
+      outline: none;
+      padding: 10px;
+      background: transparent;
+      border: none;
+    }
+    button {
+      outline: none;
+    }
+    .post {
+      width: 90%;
+      margin-left: 5%;
+      padding: 10px;
+      border-radius: 1px;
+      background: #1A1A1AF7;
+      border-bottom: 10px
+      color: black;
+      
+    }
+    .post .header {
+      font-weight: bold;
+    }
+    .post img {
+      width: 80%;
+      height: 250px
+    }
+    .post video {
+      width: 80%;
+      height: 200px;
+    }
+    .post .timestamp {
+      font-size: 0.85em;
+      color: #777;
+    }
+    .post .body {
+      margin-top: 5px;
+    }
+    .like-button {
+      cursor: pointer;
+      color: #dc3545;
+      font-size: 1.5em;
+    }
+    </style>
+</head>
+<body class="bg-dark">
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <span class="navbar-brand"><i class="fas fa-user-shield"></i> Administrador</span>
+      <button class="nav-link btn-home" href="#" onclick="showHome()"><i class="fas fa-home"></i> Viagem</button>
+      <button class="nav-link btn-pub" href="#" onclick="pub()"><i class="fas fa-user"></i> Publicar</button>
+    </nav>
+    <div id="home-content" style="display: none;">
+        <div id="post-input-container" class="container mt-4">
+      <input type="text" id="post-input" class="form-control" placeholder="Escreva uma publicação...">
+      <input type="file" id="file-input" class="d-none" accept="image/*,audio/*,video/*">
+      <button id="btn-upload" class="btn btn-secondary"><i class="fas fa-paperclip"></i></button>
+      <button id="btn-post" class="btn btn-primary">  <i class="fas fa-paper-plane"></i></button>
+      </div>
+    <div id="post-list">
+      <!-- Publicações aparecerão aqui -->
+    </div>
+    </div>
+    <div id="viagens" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="trips-list" class="list-group"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="pub.js" type="module"></script>
+<script src="admin-script.js" type="module"></script>
+<script>
+  function showHome() {
+    document.getElementById('home-content').style.display = 'none';
+    document.getElementById('viagens').style.display = 'block';
+}
+
+function pub() {
+    document.getElementById('home-content').style.display = 'block';
+    document.getElementById('viagens').style.display = 'none';
+    //loadTrips();
+}
+
+//window.showHome = showHome;
+//window.showTrips = showTrips;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/darkly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+</head>
+<body class="bg-dark text-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mt-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Login</h3>
+            <form id="login-form">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" required>
+              </div>
+              <button type="submit" class="btn btn-success btn-block">Login</button>
+            </form>
+            <p class="text-center mt-3">Não tem uma conta? <a href="#" id="register-link">Registre-se</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB1qtc7zlp6adNE1Szld1qg-oq9Beclh6g",
+      authDomain: "viagens-6fdb5.firebaseapp.com",
+      projectId: "viagens-6fdb5",
+      storageBucket: "viagens-6fdb5.appspot.com",
+      messagingSenderId: "145031200508",
+      appId: "1:145031200508:web:a77f3a415cfaf60aef2179"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loginForm = document.getElementById('login-form');
+    const registerLink = document.getElementById('register-link');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          window.location.href = `index.html?userId=${user.uid}`;
+        })
+        .catch((error) => {
+          console.error("Erro ao fazer login: ", error);
+          Swal.fire('Erro', 'Email ou senha incorretos!', 'error');
+        });
+    });
+
+    registerLink.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Registrar',
+        html:
+          '<input id="swal-email" class="swal2-input" placeholder="Email">' +
+          '<input id="swal-password" type="password" class="swal2-input" placeholder="Senha">',
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Registrar',
+        preConfirm: () => {
+          const email = Swal.getPopup().querySelector('#swal-email').value;
+          const password = Swal.getPopup().querySelector('#swal-password').value;
+          if (!email || !password) {
+            Swal.showValidationMessage('Por favor, preencha ambos os campos');
+          }
+          return { email: email, password: password };
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const email = result.value.email;
+          const password = result.value.password;
+
+          createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              const user = userCredential.user;
+              setDoc(doc(db, "users", user.uid), { email: user.email })
+                .then(() => {
+                  window.location.href = `index.html?userId=${user.uid}`;
+                })
+                .catch((error) => {
+                  console.error("Erro ao salvar dados do usuário: ", error);
+                  Swal.fire('Erro', 'Erro ao salvar dados do usuário!', 'error');
+                });
+            })
+            .catch((error) => {
+              console.error("Erro ao registrar usuário: ", error);
+              Swal.fire('Erro', 'Erro ao registrar usuário!', 'error');
+            });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
